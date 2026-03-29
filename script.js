@@ -25,8 +25,19 @@ window.addEventListener("load", handleScrollAnimation);
 
 
 // ==========================================
-// NAVBAR & MOBILE MENU
+// NAVBAR SCROLL SHRINK + MOBILE MENU
 // ==========================================
+const navbar = document.getElementById("navbar");
+
+// Shrink navbar on scroll
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 50) {
+        navbar && navbar.classList.add("scrolled");
+    } else {
+        navbar && navbar.classList.remove("scrolled");
+    }
+});
+
 const hamburger = document.querySelector(".hamburger");
 const navLinks = document.querySelector(".nav-links");
 
@@ -416,15 +427,18 @@ function showResults() {
         
         // Trigger party popper effect
         startConfetti();
-    } else if (score >= (currentQuizSet.length / 2)) {
+    } else if (score >= 7) {
         if (resultImageEl) resultImageEl.src = "assets/spiderman.jpg";
         resultMessageEl.textContent = "🕷️ Great job, friendly neighborhood hero! You know your stuff. S.H.I.E.L.D. is currently reviewing your file for the Avengers Initiative!";
-    } else if (score > 0) {
+    } else if (score >= 5) {
         if (resultImageEl) resultImageEl.src = "assets/nickfury.avif";
-        resultMessageEl.textContent = "👁️ Nick Fury is extremely disappointed... Your Marvel knowledge is severely lacking. S.H.I.E.L.D. strongly denies your application. Study up before Thanos arrives!";
+        resultMessageEl.textContent = "👁️ Nick Fury is unimpressed. You know enough to survive, but not enough to lead. Get back to the training room, cadet!";
+    } else if (score > 1) {
+        if (resultImageEl) resultImageEl.src = "assets/nickfury.avif";
+        resultMessageEl.innerHTML = "😭 <b>Are you even trying?</b> Your Marvel knowledge is depressing. Even Aunt May knows more than this! Study harder, you're embarrassing the multiverse!";
     } else {
         if (resultImageEl) resultImageEl.src = "assets/doomsday.jpg";
-        resultMessageEl.textContent = "💀 ZERO POINTS. Absolute Doomsday! Did Thanos snap away all your brain cells? We are strictly investigating you for being a Skrull imposter.";
+        resultMessageEl.innerHTML = "💀 <b>WOW, JUST WOW.</b> 💀<br>You managed to get almost everything wrong. Are you a Skrull trying to blend in? Because you're failing MISERABLY!<br>Maybe try a DC quiz next time? This is just embarrassing!";
     }
 }
 
