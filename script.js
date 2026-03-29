@@ -1,3 +1,4 @@
+
 // ==========================================
 // SCROLL ANIMATIONS / INTERSECTION OBSERVER
 // ==========================================
@@ -398,9 +399,23 @@ function showResults() {
     const resultImageEl = document.getElementById("result-image");
     if (resultImageEl) resultImageEl.style.display = "block";
 
+    // Reset minute details styles from prior rounds
+    finalScoreEl.style.color = "var(--primary-color)";
+    finalScoreEl.style.textShadow = "none";
+    finalScoreEl.style.transform = "scale(1)";
+
     if (score === currentQuizSet.length) {
         if (resultImageEl) resultImageEl.src = "assets/stanlee.webp";
         resultMessageEl.textContent = "🏆 FLAWLESS VICTORY! Excelsior! You're a true Marvel Insider. Stan Lee would be immensely proud. You've earned a meeting with Eternity itself! ✨💥";
+        
+        // Eye-catching minute details for perfect score
+        finalScoreEl.style.color = "#F4C430"; // Marvel Gold
+        finalScoreEl.style.textShadow = "0 0 20px #F4C430";
+        finalScoreEl.style.transform = "scale(1.3)";
+        finalScoreEl.style.transition = "all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+        
+        // Trigger party popper effect
+        startConfetti();
     } else if (score >= (currentQuizSet.length / 2)) {
         if (resultImageEl) resultImageEl.src = "assets/spiderman.jpg";
         resultMessageEl.textContent = "🕷️ Great job, friendly neighborhood hero! You know your stuff. S.H.I.E.L.D. is currently reviewing your file for the Avengers Initiative!";
@@ -419,6 +434,11 @@ if (restartBtn) {
         resultScreen.style.display = "none";
         quizScreen.style.display = "block";
         loadQuestion();
+        
+        // Stop confetti on restart
+        if (typeof stopConfetti === "function") {
+            stopConfetti();
+        }
     });
 }
 
@@ -454,6 +474,103 @@ if (runawayBtn) {
 
     // Fallback if they somehow manage to click it
     runawayBtn.addEventListener("click", () => {
-        alert("Wait... how did you click that?! Dam i am amazed here's my number.\n\ncall me : 9863199634 ");
+        const dpModal = document.getElementById("deadpool-modal");
+        if (dpModal) {
+            dpModal.classList.remove("hidden");
+        } else {
+            alert("Wait... how did you click that?! Dam i am amazed here's my number.\n\ncall me : 9863199634 ");
+        }
     });
+}
+    
+// Modal Closing Elements
+const dpModal = document.getElementById("deadpool-modal");
+const closeDpModal = document.getElementById("close-dp-modal");
+
+if (dpModal && closeDpModal) {
+    closeDpModal.addEventListener("click", () => dpModal.classList.add("hidden"));
+    
+    // Close on outside overlay click
+    dpModal.addEventListener("click", (e) => {
+        if (e.target === dpModal) {
+            dpModal.classList.add("hidden");
+        }
+    });
+}
+
+// ==========================================
+// CONFETTI ANIMATION (MINUTE DETAILS)
+// ==========================================
+let confettiAnimId;
+const confettiCanvas = document.createElement("canvas");
+confettiCanvas.style.position = "fixed";
+confettiCanvas.style.top = "0";
+confettiCanvas.style.left = "0";
+confettiCanvas.style.width = "100%";
+confettiCanvas.style.height = "100%";
+confettiCanvas.style.pointerEvents = "none";
+confettiCanvas.style.zIndex = "9999";
+confettiCanvas.style.display = "none";
+document.body.appendChild(confettiCanvas);
+
+const ctx = confettiCanvas.getContext("2d");
+let particles = [];
+const confettiColors = ["#EC1D24", "#F4C430", "#ffffff", "#2f8c5b", "#1E90FF", "#8A2BE2"];
+
+function createParticle() {
+    return {
+        x: Math.random() * confettiCanvas.width,
+        y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+        r: Math.random() * 6 + 4,
+        d: Math.random() * particles.length,
+        color: confettiColors[Math.floor(Math.random() * confettiColors.length)],
+        tilt: Math.floor(Math.random() * 10) - 10,
+        tiltAngleInc: (Math.random() * 0.07) + 0.05,
+        tiltAngle: 0
+    };
+}
+
+function startConfetti() {
+    confettiCanvas.width = window.innerWidth;
+    confettiCanvas.height = window.innerHeight;
+    confettiCanvas.style.display = "block";
+    particles = [];
+    for (let i = 0; i < 200; i++) {
+        particles.push(createParticle());
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        
+        particles.forEach((p) => {
+            p.tiltAngle += p.tiltAngleInc;
+            p.y += (Math.cos(p.d) + 1 + p.r / 2) / 2;
+            p.x += Math.sin(p.d);
+            
+            ctx.beginPath();
+            ctx.lineWidth = p.r;
+            ctx.strokeStyle = p.color;
+            ctx.moveTo(p.x + p.tilt + p.r, p.y);
+            ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r);
+            ctx.stroke();
+
+            // Loop particle at top when it falls off screen
+            if (p.y > confettiCanvas.height) {
+                p.x = Math.random() * confettiCanvas.width;
+                p.y = -20;
+                p.tilt = Math.floor(Math.random() * 10) - 10;
+            }
+        });
+
+        confettiAnimId = requestAnimationFrame(animate);
+    }
+    
+    animate();
+}
+
+function stopConfetti() {
+    confettiCanvas.style.display = "none";
+    if (confettiAnimId) cancelAnimationFrame(confettiAnimId);
+    ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    particles = [];
 }

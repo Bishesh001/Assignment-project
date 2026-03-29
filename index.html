@@ -14,12 +14,15 @@
 </head>
 
 <body>
+
+
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <h1 class="logo"><span class="marvel-bg">Marvel</span>Verse</h1>
             <ul class="nav-links">
                 <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="topics.html">Topics</a></li>
                 <li><a href="game.html">Game</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><button id="theme-toggle" class="theme-btn" aria-label="Toggle Dark Mode">🌙</button></li>
@@ -34,9 +37,14 @@
 
     <!-- Hero Section -->
     <header class="hero" id="home">
+        <!-- Background Video -->
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="assets/videoplayback.mp4" type="video/mp4">
+        </video>
         <div class="hero-overlay"></div>
         <div class="hero-content fade-in">
-            <h1 class="hero-title" style="color: var(--primary-color);">Welcome to the Multiverse</h1>
+            <img src="assets/marvel.jpg" alt="Marvel Universe" class="hero-center-img fade-in">
+            <h1 class="hero-title" style="color: var(--doomsday-red);">Welcome to the Marvel Cinematic Universe</h1>
             <p class="hero-subtitle">Prepare for the arrival of Doomsday and explore the legacy of Earth's mightiest
                 heroes.</p>
             <a href="game.html" class="btn btn-primary cta-btn">Play Trivia</a>
@@ -65,7 +73,7 @@
 
                 <!-- Movie 2 -->
                 <div class="movie-card fade-in scroll-anim">
-                    <img src="assets/doomsday.jpg" alt="Avengers Doomsday" class="movie-image">
+                    <img src="assets/new doomsaday imae4.jpg" alt="Avengers Doomsday" class="movie-image">
                     <div class="movie-info">
                         <h3 style="color: var(--primary-color);">Avengers: Doomsday</h3>
                         <p>A multiversal collapse brings forth the ultimate villain. The Avengers must assemble once
@@ -160,50 +168,7 @@
         </div>
     </section>
 
-    <!-- Topics Learned Section -->
-    <section class="topics section-padding bg-dark" id="topics">
-        <div class="container">
-            <h2 class="section-title text-center text-white">Topics Learned</h2>
-            <div class="title-underline center-line"></div>
 
-            <div class="features-grid">
-                <!-- Card 1 -->
-                <div class="feature-card fade-in scroll-anim">
-                    <div class="card-icon">📄</div>
-                    <h3>HTML Basics</h3>
-                    <p>Structuring the web with semantic elements, sections, headers, and organized content.</p>
-                </div>
-                <!-- Card 2 -->
-                <div class="feature-card fade-in scroll-anim">
-                    <div class="card-icon">🎨</div>
-                    <h3>CSS Styling</h3>
-                    <p>Creating beautiful layouts using Flexbox and Grid. Implementing responsive variables and UI
-                        themes.</p>
-                </div>
-                <!-- Card 3 -->
-                <div class="feature-card fade-in scroll-anim">
-                    <div class="card-icon">⚙️</div>
-                    <h3>JS DOM Manipulation</h3>
-                    <p>Dynamically updating HTML elements, adding event listeners, and building interactive experiences.
-                    </p>
-                </div>
-                <!-- Card 4 -->
-                <div class="feature-card fade-in scroll-anim">
-                    <div class="card-icon">📱</div>
-                    <h3>Responsive Design</h3>
-                    <p>Ensuring the website looks completely polished on mobile phones, tablets, and massive desktop
-                        screens.</p>
-                </div>
-                <!-- Card 5 -->
-                <div class="feature-card fade-in scroll-anim">
-                    <div class="card-icon">✅</div>
-                    <h3>Form Validation</h3>
-                    <p>Securing input data with custom JavaScript validation for required fields, lengths, and email
-                        formats.</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Group Members Section -->
     <section class="team section-padding" id="team">
@@ -245,14 +210,19 @@
 
     <!-- Footer -->
     <footer>
-        <div class="container footer-content">
+        <div class="container footer-content fade-in scroll-anim">
+            <img src="assets/marvel.jpg" alt="Marvel Universe" class="footer-image">
             <div class="footer-logo"><span class="marvel-bg">Marvel</span>Verse</div>
+            
+            <p class="footer-quote">"In the Marvel Cinematic Universe, even the freaks are the most loved."</p>
+            
             <div class="socials">
-                <a href="#">FB</a>
-                <a href="#">TW</a>
-                <a href="#">IG</a>
+                <a href="https://www.facebook.com/Marvel/" target="_blank" rel="noopener noreferrer" title="Facebook">FB</a>
+                <a href="https://x.com/Marvel" target="_blank" rel="noopener noreferrer" title="X (Twitter)">X</a>
+                <a href="https://www.instagram.com/marvel/?hl=en" target="_blank" rel="noopener noreferrer" title="Instagram">IG</a>
             </div>
-            <p>&copy; 2026 MarvelVerse College Project. All Rights Reserved.</p>
+            
+            <p style="margin-top: 10px; color: #555; font-size: 0.85rem;">&copy; 2026 MarvelVerse College Project. Built with passion.</p>
         </div>
     </footer>
 
